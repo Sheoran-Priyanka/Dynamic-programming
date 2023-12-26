@@ -1,0 +1,87 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+/// ****** recursive dp ************ /////////
+int solve(int n , int k , vector<int>&arr, vector<vector<int>>&dp)
+{
+    if(k == 0)return 1;
+    if(n == 0)return 0;
+
+    if(dp[n][k] != -1)return dp[n][k];
+
+    //can take 
+    if(arr[n-1] <= k)
+    {
+        return dp[n][k] = solve(n-1,k-arr[n-1],arr,dp) + solve(n-1,k,arr,dp);
+    }
+    // cannot take
+    else
+    return dp[n][k] = solve(n-1,k,arr,dp);
+}
+
+int findWays(vector<int>& arr, int k)
+{
+    int n = arr.size();
+	  vector<vector<int>>dp(n+1,vector<int>(k+1,-1));
+    return solve(n,k,arr,dp);
+}
+
+/// *** top down approach *** //////
+#include<bits/stdc++.h>
+using namespace std;
+int findWays(vector<int>& arr, int k)
+{
+    int n = arr.size();
+	  vector<vector<int>>dp(n+1,vector<int>(k+1,-1));
+    for(int ind = 0; ind <= n; ind++)
+    {
+        dp[ind][0] = 1;
+    }
+    for(int sum = 1; sum <= k; sum++)
+    {
+        dp[0][sum] = 0;
+    }
+
+    for(int ind = 1; ind <= n; ind++)
+    {
+        for(int sum = 1; sum <= k; sum++)
+        {
+            if(arr[ind-1] <= sum)
+            {
+                dp[ind][sum] = dp[ind-1][sum-arr[ind-1]] + dp[ind-1][sum];
+            }
+            else
+            dp[ind][sum] = dp[ind-1][sum];
+        }
+    }
+    return dp[n][k];
+}
+
+//// ******** space optimisation **********////////
+
+#include<bits/stdc++.h>
+using namespace std;
+
+int findWays(vector<int>& arr, int k)
+{
+    int n = arr.size();
+    vector<int>prev(k+1,0);
+    prev[0] = 1;
+
+    for(int ind = 1; ind <= n; ind++)
+    {
+        vector<int> curr(k + 1, 1);
+        // curr[0] = 1;
+        for(int sum = 1; sum <= k; sum++)
+        {
+            if(arr[ind-1] <= sum)
+            {
+                curr[sum] = (prev[sum-arr[ind-1]] + prev[sum]);
+            }
+            else
+            curr[sum] = prev[sum];
+        }
+        prev = curr;
+    }
+    return prev[k];
+}
