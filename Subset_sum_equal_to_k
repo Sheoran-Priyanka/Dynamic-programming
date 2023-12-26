@@ -1,0 +1,56 @@
+///// **** recursive dp **** //////
+
+#include <bits/stdc++.h> 
+int solve(int n, int k , vector<int>&arr,vector<vector<int>>&dp)
+{
+    if(k == 0)return 1;
+    if(n == 0)return 0;
+
+    if(dp[n][k] != -1)return dp[n][k];
+
+    //can pick 
+    if(arr[n-1] <= k)
+    return dp[n][k] = (solve(n-1,k-arr[n-1],arr,dp) || (solve(n-1,k,arr,dp)));
+    // cannot pick
+    else
+    return dp[n][k] = solve(n-1,k,arr,dp);
+
+}
+
+bool subsetSumToK(int n, int k, vector<int> &arr) {
+    vector<vector<int>>dp(n+1,vector<int>(k+1,-1));
+    return solve(n,k,arr,dp);
+}
+
+///// ******* top down approach ****** /////
+
+#include <bits/stdc++.h> 
+bool subsetSumToK(int n, int k, vector<int> &arr) {
+    vector<vector<int>>dp(n+1,vector<int>(k+1,-1));
+
+    ///base condition ->>> initialization k == 0 -> 1 else n == 0 -> 0
+    for(int ind = 0; ind <= n; ind++)
+    {
+        dp[ind][0] = 1;
+    }
+    for(int sum = 1; sum <= k; sum++)
+    {
+        dp[0][sum] = 0;
+    }
+
+    for(int ind = 1; ind <= n; ind++)
+    {
+        for(int sum = 1; sum <= k; sum++)
+        {
+            //can pick 
+            if(arr[ind-1] <= sum)
+            dp[ind][sum] = (dp[ind-1][sum-arr[ind-1]]) || (dp[ind-1][sum]);
+
+            // cannot pick
+            else
+            dp[ind][sum] = dp[ind-1][sum];
+        }
+    }
+
+    return dp[n][k];
+}
