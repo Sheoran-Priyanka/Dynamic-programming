@@ -1,0 +1,42 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+int solve(int n , int w, vector<int>&profit, vector<int>&weight,vector<vector<int>>&dp)
+{
+    if(w == 0)
+    return 0;
+
+    if(n == 0)
+    return 0;
+
+    if(dp[n][w] != -1)return dp[n][w];
+    //can pick
+    if(weight[n-1] <= w)
+    {
+        return dp[n][w] = max(solve(n-1,w,profit,weight,dp),profit[n-1] + solve(n,w-weight[n-1],profit, weight,dp));
+    }
+    //can not pick
+    else
+    return dp[n][w] = solve(n-1,w,profit,weight,dp);
+}
+
+
+/// top down ////
+int unboundedKnapsack(int n, int w, vector<int> &profit, vector<int> &weight)
+{
+    vector<vector<int>>dp(n+1,vector<int>(w+1,0));
+    
+    for(int ind = 1; ind <= n; ind++)
+    {
+        for(int wt = 1; wt <= w; wt++)
+        {
+            if(weight[ind-1] <= wt)
+            {
+                dp[ind][wt] = max(dp[ind-1][wt] ,profit[ind-1] + dp[ind][wt-weight[ind-1]]);
+            }
+            else
+            dp[ind][wt] = dp[ind-1][wt];
+        }
+    }
+    return dp[n][w];
+}
