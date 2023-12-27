@@ -1,0 +1,45 @@
+int solve(int n ,int k, vector<int>&price,vector<vector<int>>&dp)
+{
+	if(k == 0)
+	return 0;
+	if(n == 0)
+	return 0;
+
+	if(dp[n][k] != -1)return dp[n][k];
+	//take
+	if(n <= k)
+	return dp[n][k]  = max(price[n-1]+solve(n,k-n,price,dp) , solve(n-1,k,price,dp));
+	//can not take
+	else
+	return dp[n][k]  = solve(n-1,k,price,dp);
+}
+
+////********* top down **************///
+int cutRod(vector<int> &price, int n)
+{
+	int k = n;
+	vector<vector<int>>dp(n+1,vector<int>(k+1,-1));
+	for(int ind = 0; ind <= n; ind++)
+	{
+		dp[ind][0] = 0;
+	}
+	for(int sum = 1; sum <= k; sum++)
+	{
+		dp[0][sum] = 0;
+	}
+	for(int ind = 1; ind <= n; ind++)
+	{
+		for(int sum = 1; sum <= k; sum++)
+		{
+			if(ind <= sum)
+			{
+				dp[ind][sum] = max(dp[ind-1][sum],price[ind-1]+dp[ind][sum-ind]);
+			}
+			else
+			dp[ind][sum] = dp[ind-1][sum];
+		}
+	}
+
+	return dp[n][k];
+
+}
