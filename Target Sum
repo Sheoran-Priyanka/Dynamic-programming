@@ -1,0 +1,35 @@
+class Solution {
+public:
+    int findTargetSumWays(vector<int>& nums, int target) {
+        int n = nums.size();
+        int totalsum = accumulate(nums.begin(),nums.end(),0);
+        int d = abs(target);
+        if(totalsum < d || (totalsum+d)%2)return 0;
+        int k = (totalsum+d)/2;
+        vector<vector<int>>dp(n+1,vector<int>(k+1,-1));
+        int countzero = 0;
+        dp[0][0] = 1;
+        for(int ind = 1; ind <= n; ind++)
+        {
+            if(nums[ind-1] == 0)countzero++;
+            dp[ind][0] = pow(2,countzero);
+        }
+        for(int sum = 1; sum <= k; sum++)
+        {
+            dp[0][sum] = 0;
+        }
+        for(int ind = 1; ind <= n; ind++)
+        {
+            for(int sum = 1; sum <= k; sum++)
+            {
+                if(nums[ind-1] <= sum)
+                {
+                    dp[ind][sum] = (dp[ind-1][sum-nums[ind-1]] + dp[ind-1][sum]);
+                }
+                else
+                dp[ind][sum] = dp[ind-1][sum];
+            }
+        }
+        return dp[n][k];
+    }
+};
