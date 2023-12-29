@@ -1,0 +1,53 @@
+///// ways ////////
+
+class Solution {
+    /// ******* recursive **********///
+    int solve(int n,int amount,vector<int>coins,vector<vector<int>>&dp)
+    {
+        if(amount == 0)return 1;
+        if(n == 0)return 0;
+
+        if(dp[n][amount] != -1)return dp[n][amount];
+        // can pick
+        int pick = 0;
+        if(amount >= coins[n-1])
+        {
+            return dp[n][amount] = solve(n,amount-coins[n-1],coins,dp)+solve(n-1,amount,coins,dp);
+        }
+        // cannot pick
+        else
+        {
+            return dp[n][amount] = solve(n-1,amount,coins,dp);
+        }
+    }
+//// ********* top down ***********/////
+public:
+    int change(int amount, vector<int>& coins) {
+        int n = coins.size();
+        vector<vector<int>>dp(n+1,vector<int>(amount+1,-1));
+
+        for(int ind = 0; ind <= n; ind++)
+        {
+            dp[ind][0] = 1;
+        }
+        for(int amt = 1; amt <= amount; amt++)
+        {
+            dp[0][amt] = 0;
+        }
+
+        for(int ind = 1; ind <= n; ind++)
+        {
+            for(int amt = 1; amt <= amount; amt++)
+            {
+                if(amt >= coins[ind-1])
+                {
+                    dp[ind][amt] = dp[ind][amt-coins[ind-1]] + dp[ind-1][amt];
+                }
+                else
+                dp[ind][amt] = dp[ind-1][amt];
+            }
+        }
+
+        return dp[n][amount];
+    }
+};
