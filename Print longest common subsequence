@@ -1,0 +1,59 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+/// ************* recursive dp -> bottom up ************ ///
+string solve(int ind1, int ind2, string &s1 , string &s2,vector<vector<string>>&dp)
+{
+        if(ind1 == 0 || ind2 == 0)
+        return "";
+
+        if(dp[ind1][ind2] != "")return dp[ind1][ind2];
+        if(s1[ind1-1] == s2[ind2-1])
+        {
+            return dp[ind1][ind2] = solve(ind1-1, ind2-1, s1, s2, dp)+s1[ind1-1];
+        }
+        else
+        {
+			string lcs;
+			if(solve(ind1-1, ind2, s1, s2, dp).size() > solve(ind1, ind2-1, s1,s2, dp).size())
+			lcs = solve(ind1-1, ind2, s1, s2, dp);
+			else
+			lcs = solve(ind1, ind2-1, s1,s2, dp);
+            return dp[ind1][ind2] = lcs;
+        }
+}
+///// **** top down ********** ///////////
+string findLCS(int n, int m,string &s1, string &s2){
+	// Write your code here.
+        vector<vector<string>>dp(n+1,vector<string>(m+1,""));
+		// return solve(n,m,s1, s2,dp);
+        for(int ind1 = 0; ind1 <= n; ind1++)
+        {
+            dp[ind1][0] = "";
+        }
+        for(int ind2 = 0; ind2 <= m; ind2++)
+        {
+            dp[0][ind2] = "";
+        }
+        for(int ind1 = 1; ind1 <= n; ind1++)
+        {
+            for(int ind2 = 1; ind2 <= m; ind2++)
+            {
+                if(s1[ind1-1] == s2[ind2-1])
+                {
+                    dp[ind1][ind2] = dp[ind1-1][ind2-1]+s1[ind1-1];
+                }
+                else
+                {
+					string lcs = "";
+					if(dp[ind1-1][ind2].size() > dp[ind1][ind2-1].size())
+					lcs = dp[ind1-1][ind2];
+					else
+					lcs = dp[ind1][ind2-1];
+                    dp[ind1][ind2] = lcs;
+                }
+            }
+        }
+        return dp[n][m];	
+}
+
