@@ -26,7 +26,7 @@ int findWays(vector<int>& arr, int k)
     return solve(n,k,arr,dp);
 }
 
-/// *** top down approach *** //////
+/// *** Bottom up approach *** //////
 #include<bits/stdc++.h>
 using namespace std;
 int findWays(vector<int>& arr, int k)
