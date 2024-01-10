@@ -14,7 +14,7 @@ int solve(int n ,int k, vector<int>&price,vector<vector<int>>&dp)
 	return dp[n][k]  = solve(n-1,k,price,dp);
 }
 
-////********* top down **************///
+////********* bottom up **************///
 int cutRod(vector<int> &price, int n)
 {
 	int k = n;
