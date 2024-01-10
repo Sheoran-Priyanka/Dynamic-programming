@@ -1,4 +1,4 @@
-///////// *********** recursive dp -> bottom-up *********** ////////////
+///////// *********** recursive dp -> top down *********** ////////////
 
 class Solution {
     string solve(int n1, int n2, string &str1, string &str2,vector<vector<string>>&dp)
