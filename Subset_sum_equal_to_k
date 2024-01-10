@@ -22,7 +22,7 @@ bool subsetSumToK(int n, int k, vector<int> &arr) {
     return solve(n,k,arr,dp);
 }
 
-///// ******* top down approach ****** /////
+///// ******* bottom up approach ****** /////
 
 #include <bits/stdc++.h> 
 bool subsetSumToK(int n, int k, vector<int> &arr) {
