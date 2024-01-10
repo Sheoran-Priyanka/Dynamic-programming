@@ -21,7 +21,7 @@ int solve(int n , int w, vector<int>&profit, vector<int>&weight,vector<vector<in
 }
 
 
-/// top down ////
+/// bottom up ->tabulation ////
 int unboundedKnapsack(int n, int w, vector<int> &profit, vector<int> &weight)
 {
     vector<vector<int>>dp(n+1,vector<int>(w+1,0));
