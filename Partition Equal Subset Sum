@@ -29,7 +29,7 @@ public:
         solve(n, k, nums, dp);
     }
 
-////// ******* top down appraoch ********* ////////
+////// ******* bottom up appraoch ********* ////////
 public:
     bool canPartition(vector<int>& nums) {
         int n = nums.size();
