@@ -1,5 +1,5 @@
 class Solution {
-///  *********     recursive dp -> bottom up ************ ///
+///  *********     recursive dp -> top down ************ ///
     int solve(int ind1, int ind2, string &text1 , string &text2, int n1, int n2,vector<vector<int>>&dp)
     {
         if(ind1 == 0 || ind2 == 0)
@@ -15,7 +15,7 @@ class Solution {
             return max(solve(ind1-1, ind2, text1, text2, n1, n2, dp),solve(ind1, ind2-1, text1,text2, n1, n2, dp));
         }
     }
-///  *********     recursive dp -> top down ************ ///
+///  *********   bottom up ************ ///
 public:
     int longestCommonSubsequence(string text1, string text2) {
         int n1 = text1.size() , n2 = text2.size();
