@@ -20,7 +20,7 @@ class Solution {
             return dp[n][amount] = solve(n-1,amount,coins,dp);
         }
     }
-//// ********* top down ***********/////
+//// ********* Bottom up ***********/////
 public:
     int change(int amount, vector<int>& coins) {
         int n = coins.size();
