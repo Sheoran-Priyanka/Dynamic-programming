@@ -29,7 +29,7 @@ int maxProfit(vector<int> &values, vector<int> &weights, int n, int w)
 }
 
 
-///// ********* tabulation ********* /// top Down Approach /// 
+///// ********* tabulation ********* /// Bottom up Approach /// 
 
 #include<bits/stdc++.h>
 using namespace std;
